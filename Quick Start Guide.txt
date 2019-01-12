@@ -1,0 +1,94 @@
+Quick Star Guide
+
+1. Login to Web Hosting Control Panel. Create a new mysql database and database user by any name. Add User to the database and most importantly give the user all rights or privileges to the newly created database. Make a note of database name, database user and password. Also make a note of Database Host found on the same page. 
+
+NOTE: You can also use credentials of your existing database instead of creating a new one.
+
+
+2. Decompress SecureDownloadLinks zip folder using a zip extractor like winzip.
+ 
+3. Inside the extracted folder locate the folder named "secdown". Open settings.php inside this folder in any text editer like notepad or dreamweaver.
+
+4. On line 6 to 9 enter database information (replace localhost,DATABASENAME,DATABASEUSER, PASSWORD ) with information noted in step 3.
+
+5. On line 11 replace the link http://yourdomainame.com/secdown/ with url to the secdown folder as it will be when you upload to the server.
+
+If you plan to drop the secdown folder in the website root folder then simply locate http://yourdomainame.com/secdown/ in  settings.php (at line 11) and replace yourdomainame.com with the name of your domain.
+ 
+6. Login to your Web Server's ftp using ftp client like Filezilla or CoreFTP ( login credentials provided by your webhost).
+
+7.Navigate to your website folder on the Web Server's ftp  and Upload "secdown" folder in the root or as you find appropriate.
+
+8. Now you need to change the download links on your download page. 
+
+Assuming you are still connected to your ftp client locate your page that contains links to downloadable files.
+
+Download this file on your computer. 
+
+9. Backup this file.  Open it for editing in dreamweaver, notepad or any texteditor. 
+
+10. At the very top add the two lines give below.
+
+<?php include_once("secdown/functions.php");  ?>
+
+<?php dbconnect(); ?>
+
+The first line is to include the functions.php file and  relative url to functions.php is required. 
+
+The second line is to establish database conntection. 
+
+11.The link to your downloadable file with look something like this. 
+
+<a href="http://yourdomainname.com/downloadables.zip" >Your Downloadables</a>
+
+
+where  http://yourdomainname.com/downloadables.zip
+
+is hyperlink to your downloadable file .
+
+12. In the anchor tag or <a> tag given in step 13 replace hyperlink with 
+
+<?php downloadurl('http://yourdomainname.com/downloadables.zip','veryspecials'); ?> 
+
+http://yourdomainname.com/downloadables.zip   is hyperlink to your downloadable file .
+
+veryspecials is fake name of the downloadable. 
+
+
+13. Add an onclick event like this  onclick="updateReferer(this.href);" to the anchor tag.
+
+
+14. Combining step 11 and 12 and 13 The new link to your download url is. 
+
+<a href="<?php downloadurl('http://yourdomainname.com/downloadables.zip','veryspecials'); ?>" onclick="updateReferer(this.href);">Your Downloadables</a>
+
+
+14. Similarly repeat step 11 to  14 to replace other links to downloadable files on the page. 
+
+15. Once finished upload your page to same location thus repalcing the old file. 
+
+16. Load the page containing download links in your browser test the links and you are ready to go!
+
+
+
+
+
+
+Addionally: Optional
+
+If your file is on the same server you have the option of using relative path to your file when you generate the secure link. 
+
+<?php downloadurl('downloadables.zip','veryspecials'); ?> 
+
+where downloadables.zip is relative path to the file.
+
+If your file was stored in a folder called myfiles just above public_html or www folder on the same server you can
+use relative path to file can be used. 
+
+<?php downloadurl('../../myfiles/downloadables.zip','veryspecials'); ?> 
+
+where downloadables.zip is the relative path to the file.
+
+
+More Information provided in the documentation.
+

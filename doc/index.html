@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head lang="en">
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<title>Secure Download Links Documentation</title>
+	<!-- Framework CSS -->
+	<link rel="stylesheet" href="assets/blueprint-css/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="assets/blueprint-css/print.css" type="text/css" media="print">
+	<!--[if lt IE 8]><link rel="stylesheet" href="assets/blueprint-css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	<link rel="stylesheet" href="assets/blueprint-css/plugins/fancy-type/screen.css" type="text/css" media="screen, projection"/>
+	<style type="text/css" media="screen">
+		p, table, hr, .box { margin-bottom:25px; }
+		.box p { margin-bottom:10px; }
+	</style>
+</head>
+
+
+<body>
+	<div class="container">
+	
+		<h3 class="center alt">&ldquo;Secure Download Links&rdquo; Documentation by &ldquo;Anupam Rekha&rdquo; v1.0</h3>
+		
+		<hr/>
+		
+		<h1 class="center">&ldquo;Secure Download Links&rdquo;</h1>
+		
+		<div class="borderTop">
+			<div class="span-6 colborder info prepend-1">
+				<p class="prepend-top">
+					<strong>
+					Created: 26/7/2011<br>
+					By: Anupam Rekha<br>
+					Email: <a href="mailto:support@satyamtechnologies.net">support@satyamtechnologies.net</a>
+					</strong>
+				</p>
+			</div><!-- end div .span-6 -->		
+	
+			<div class="span-12 last">
+				<p class="prepend-top append-0">Thank you for purchasing my script. If you have any questions that are beyond the scope of this help file, please feel free to email via my user page contact form <a href="http://themeforest.net/user/anupamrekha">here</a>. Thanks so much!</p>
+			</div>
+		</div><!-- end div .borderTop -->
+		
+		<hr>
+		
+		<h2 id="toc" class="alt">Table of Contents</h2>
+		<ol class="alpha">
+		
+
+			<li><a href="#sqlFiles">SQL File</a></li>
+			<li><a href="#phpFiles">PHP Files</a> </li>
+
+			<li><a href="#integration">Integration</a></li>
+			<li><a href="#additional">Additional</a></li>
+			<li><a href="#htaccess">HTACCESS Files</a></li>
+			<li><a href="#troubleshooting">Troubleshooting</a></li>
+         	<li><a href="#credits">Credits</a></li>
+		</ol>
+		
+    <hr/>
+		
+	
+
+	
+	  <h3 id="sqlFiles"><strong>A) SQL File</strong> - <a href="#toc">top</a></h3>
+
+		<p>A MySql file that contains dump for the two tables are placed inside the sql folder. The script already does table generation for you. In most cases you will NOT need to import these in your database. </p>
+
+  <hr/>
+
+		<h3 id="phpFiles"><strong>B) PHP Files</strong> - <a href="#toc">top</a></h3>
+
+		<p>First PHP File that needs modification is settings.php. You can safely change the database related information and download url that is marked in blue. Return back and adjust other parameters if you need in the future.</p>
+		<strong>define('DBHOST', '<span style="color: blue">localhost</span>');  // Add the Database Host Server Name. localhost in general cases. <br>
+		  define('DBNAME', '<span style="color: blue">DATABASENAME</span>'); <br/>
+		  define('DBUSER', '<span style="color: blue">DATABASEUSER</span>'); <br/>
+	    define('DBPASS', '<span style="color: blue">PASSWORD</span>');  <br />
+        define('URLTOFILES', '<span style="color: blue">http://www.yourdomainname.com/secdown/</span>');</strong></p>
+
+
+      <p><strong>Second PHP File  to be customized is your download page where you want to add secure links.</strong></p>
+      
+      <p>
+
+      At the top of the page add two lines to included functions.php and stablish connection.      </p>
+      <p style="color: blue;">		<strong>&lt;?php include_once(&quot;functions.php&quot;);  ?&gt;<br>
+        &lt;?php dbconnect();  
+      ?&gt;</strong></p>
+      
+      <p>Replace download links <strong>SIMILAR TO:</strong></p>
+
+      <p><strong>&lt;a href=&quot;http://satyamtechnologies.net/secdown/sec_files/sampledoc.doc&quot; &gt;MS Word Document&lt;/a&gt;   </strong>   </p>
+      <p ><strong>WITH</strong></p>
+      <p style='color: blue;'><strong>&lt;a href=&quot;&lt;?php  downloadurl('http://satyamtechnologies.net/secdown/sec_files/sampledoc.doc','mswordfile'); ?&gt;&quot; onclick=&quot;updateReferer(this.href);&quot; &gt;MS Word Document&lt;/a&gt;</strong></p>
+      <p>http://satyamtechnologies.net/secdown/sec_files/sampledoc.doc is url to download file. 
+      
+      <br />
+      mswordfile is the pretended filename. </p>
+      <p> You can also place the downloadable files on another server and provide a url as described above.</p>
+      <p></p>
+
+     <p> <b>You can refer example.php sample implementation or "QUICK START GUIDE" for instructions on implementing this in your project.</b></p> 
+     <hr/>
+	  <h3 id="integration"><strong>C)Integration</strong> - <a href="#toc">top</a></h3>
+
+		<p>Steps to Integrate this Script in your project is as under:</p>
+		<ol>
+        <li><h3>Extract files</h3><p> Decompress SecureDownloadLinks.zip folder using a zip extractor like winzip.</p></li>
+             <li><h3>Create Database</h3><p> Create  new database and database user for this this script. </p></li>
+             <h3>OR</h3>
+             <p>You can use your exisiting database that you are using for your project/website.</p>
+             <p>You will need four things in the next step. <b>database hostname, database name, database user, database user password.</b></p>
+        <li><h3>Edit settings.php</h3><p> Open settings.php inside the secdown folder using  a texteditor like notepad or dreamweaver. You need to add database credentials and change URL to the secdown folder as it will be when uploaded on the server.Find below a <strong>ste-by-step instruction</strong> to edit settings.php file.</p></li>
+             <strong>Edit the following lines in the settings.php file.</strong>
+             <ul><li>On line number 8, 9, 10, 11 add <strong>database host name, database name, database user name, database password </strong>respectively. 
+             </li>
+             <li>On line number 13 provide the <strong>URL to this scripts installation folder</strong>.<br /> This will depend on the server location where you place the secdown folder in your website directory structure in the next steps. <br /> <br />If secdown is placed in the root folder or at the toplevel you can simply<strong> replace "yourdomainame.com" with your domain name in the URL or HTTP Address on (line 13) settings.php</strong><br />.             </li>
+             <li>On line number 15 you can <strong>change the expected number of downloadable files</strong> that you may want to handle.<strong>(This edit is optional)</strong>.<br />
+               At present it is set to 10000 files which should be sufficient for most practical purposes <br />
+               <br />
+             On line number 16  you can change the number of days after which <strong>old download codes and references to files no longer present is deleted</strong> for cleaning up the system and better performance.<strong> (This edit is optional)</strong>.<br />At present it is set to 30 days which in most cases will be appropriate.<br /><br /></li>
+             <li>On line number 23 you can customize the error message  displayed on the "no permissions" page on uauthorized access. <br /><strong>REPLACE </strong><br /> &lt;a href=&quot;info@satyamtecnologies.net&quot;&gt;info@satyamtecnologies.net&lt;/a&gt;<br /><strong>with your support or sales email address.</strong><br />
+               .            
+             </ul>
+             <li><h3>Customize No Permissions File (Optional)</h3>
+ You can match the design of "No Permissions" page with rest of your website easily.<br/><br/>
+ Locate  no-permissions.php inside secdown folder and open it in a text editor.<br /><br />On line number 11  <strong>replace style.css with link to your css file</strong>.<br /><br />
+ <h3>OR</h3> Edit the style.css file in css folder. CSS  for  No Permissions page is towards the bottom.  </p> </li>
+             </li>
+            <li><h3>Upload Files</h3></p>Use a FTP Program like Filezilla to <strong>upload the secdown folder </strong>to the web server. You can upload in the website root folder or anywhere in the website directory structure.</p></li>   
+
+          <li><h3>Edit Your File Containing Downloads</h3>
+          <p>Download your file from the FTP Server that <strong>contains links to your download links</strong>. 
+         <ul><li><strong>Make a backup</strong> of this file. Open the file in a text editor for editing.<br /><br/></li>
+   
+         <li><p>	Add these <strong>two php lines at the top </strong>in your file.</strong>	<br/><br />  <pre>&lt;?php include_once(&quot;secdown/functions.php&quot;);  ?&gt;  </pre><br/>
+          <pre>&lt;?php dbconnect();    </pre>
+      ?&gt;</p></li>
+         
+         <li> <p>Next step is to  <strong>Change Download Links in Your File</strong>. The code that you need to add to change the download links is as under.</p>
+           <pre>
+                 
+           <p>	&lt;?php  downloadurl('downloadurl','fakename');  ?&gt;  </pre></p>
+      
+                - downloadurl is  url to your download file.<br/>
+               - fakename is the filename to be shown to users.<br/>
+                <br />
+                <p>Remove<strong> all old download URLs </strong>and add the new URLS in their places:</p>
+                <strong>REPLACE </strong><br/>
+               
+           <pre>
+           &lt;a href=&quot;http://yourdomainname.com/downloadables.zip&quot; &gt;Your Downloadables&lt;/a&gt;  <pre></li>
+        <br />    
+           <b>WITH</b>  <pre>
+           <p>&lt;a href=&quot;&lt;?php downloadurl('http://yourdomainname.com/downloadables.zip','veryspecials'); ?&gt;&quot; onclick=&quot;updateReferer(this.href);&quot;&gt;Your Downloadables&lt;/a&gt;   </pre></p>
+         </li>
+         <li>Once you are finished editing the file reupload the file to your server at the same location from where you downloaded.</li>
+         </ul><br />
+          </li>
+             
+          <li><h3>Test It</h3>Navigate to the recently edited <strong> "file containing downloads" in your web browser.</strong> and test the download links. </li>
+        </ol>
+	
+  <hr>
+   <h3 id="additional"><strong>D)Additional (Optional)</strong> - <a href="#toc">top</a></h3>
+<p></p>Addionally, you have option to <strong>generate a Secure Download Link using Relative URL</strong> to the downloadable file. For this your downloadable file should be stored o the same server.<p>
+
+<p>This is useful for storing dowloadable files below  docroot or www folder. This is safest as a http url to the file cannot be gnerated so user is forced to come to your web page to download the file. </p>
+
+<p>Check the example below to see how you can generate secure url with relative file path. </p>
+<pre>
+--secdown-css
+         -images
+         -js  
+         -css
+         -downloadables.zip          
+         </pre>
+         
+         <pre>
+&lt;? downloadurl('downloadables.zip','veryspecials');   ?&gt; </pre>
+
+where downloadables.zip is relative path to the file.
+
+If your file was stored in a folder called myfiles just above public_html or www folder on the same server you can
+use relative path to file can be used. 
+
+<pre>
+downloadables.zip - myfiles - www or public_html - secdown	- css
+								-images
+								-js 
+								-css
+								-download.php 
+			        								</pre>
+         
+
+ <pre>
+&lt;? downloadurl('../../myfiles/downloadables.zip','veryspecials');  ?&gt; </pre>
+
+where ../../myfiles/downloadables.zip is the relative path to the file.
+<br /><br />
+<h6>Most of the advanced users and experts recommend this method.</h6> 
+<br />
+
+<h6>Displaying a file inline instead of downloading. </h6>
+
+<p>You can display a file inline by setting the NotAdownload Parameter in downloadurl to 1 </p>
+
+ <pre>
+&lt;? downloadurl('../../myfiles/downloadables.zip','veryspecials', 1);  ?&gt; </pre>
+
+<br />
+
+<h6>Download a file by supplying an optional file extension. </h6>
+
+<p>You can download a file by supplying an option file extension. This works in case of  download links created with file sharing websites or when files have uncommon extensions. Below is a link created for downloading a file with .tar.gz extension.</p>
+
+ <pre>
+&lt;? downloadurl('../../myfiles/downloadables.zip','veryspecials', 0, 'tar.gz');  ?&gt; </pre>
+<p>&nbsp;</p>
+
+
+<hr />
+	  <h3 id="htaccess"><strong>G)Htaccess Files</strong> - <a href="#toc">top</a></h3>
+<p>The folder that contains the downloadable files on server should be protected by securing with .htaccess file. This is beyond the scope of my script currently. </p>
+
+<p>If you need help with this please visit our <a href="http://sixthlife.net/forum/">Support Forum</a> for previous discussios.  Please leave a message if needed, and I will immediately get in touch. </p>
+
+
+	
+  <hr>	
+
+
+	  <h3 id="credits"><strong>H)Credits</strong> - <a href="#toc">top</a></h3>
+<p>The icons used have been designed by us. Free for non-commercial use.  </p>
+
+
+	
+  <hr>	
+ 	  <h3 id="troubleshooting"><strong>I)Troubleshooting</strong> - <a href="#toc">top</a></h3>
+<p><h3>The downloaded file is corrupt. </h3><p>Check if the URL to File is correct and placed on your web server.</p>
+	
+  <hr>			
+	  <p>Once again, thank you so much for purchasing this script. As I said at the beginning, I'd be glad to help you if you have any questions relating to this script. No guarantees, but I'll do my best to assist. </p> 
+	  
+	  <p>For item support, reporting bugs and update requests, product information please contact us through our support forum. <a href="http://sixthlife.net/forum/">Sixthlife Support Forum</a>.</p>
+		
+		<p class="append-bottom alt large"><strong>Anupam Rekha</strong></p>
+		<p><a href="#toc">Go To Table of Contents</a></p>
+		
+		<hr class="space">
+	</div><!-- end div .container -->
+</body>
+</html>
